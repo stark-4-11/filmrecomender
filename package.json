@@ -3,7 +3,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "echo 'Building...' && npm install"
+    "build": "echo 'Skipping build step for Node.js app'"
   },
   "dependencies": {
     "express": "^4.21.2",
