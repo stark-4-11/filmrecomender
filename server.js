@@ -12,13 +12,26 @@ const PORT = process.env.PORT || 5000;
 // Database connection
 connectDB();
 
+// Error handling
+app.use((err, req, res, next) => {
+  console.error('Server error:', err.message);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
 // Health check endpoint
 app.get('/', (req, res) => {
-  res.json({
-    status: 'running',
-    database: 'connected',
-    lastUpdated: new Date().toISOString()
-  });
+  try {
+    
+    console.log("Status req: ", new Date().toISOString());
+    res.json({
+      status: 'running',
+      database: 'connected',
+      lastUpdated: new Date().toISOString()
+    });
+  } catch (error) {
+    console.log("Error in status req: ", error);
+    
+  }
 });
 
 // Live search endpoint
@@ -27,11 +40,6 @@ app.get('/search', async (req, res) => {
   res.json(results);
 });
 
-// Error handling
-app.use((err, req, res, next) => {
-  console.error('Server error:', err.message);
-  res.status(500).json({ error: 'Internal server error' });
-});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
